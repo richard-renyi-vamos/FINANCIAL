@@ -1,0 +1,35 @@
+CHAT GPT PROMPT - https://chat.openai.com/
+
+create a python script that gives stock recommendations
+ChatGPT
+As an AI language model, I cannot provide financial advice or recommendations. However, I can provide an example of how to retrieve stock information using Python and some of the popular libraries used for data analysis and visualization.
+
+Here is a basic Python script that uses the yfinance library to retrieve stock data and the pandas library to analyze the data:
+
+python
+Copy code
+import yfinance as yf
+import pandas as pd
+
+# Define the ticker symbol of the stock you want to retrieve data for
+tickerSymbol = 'AAPL'
+
+# Retrieve the data from Yahoo Finance
+tickerData = yf.Ticker(tickerSymbol)
+
+# Get the historical prices for the stock
+tickerDf = tickerData.history(period='1d', start='2010-1-1', end='2023-05-01')
+
+# Analyze the data using pandas
+# Calculate the moving average for the past 50 days
+tickerDf['MA50'] = tickerDf['Close'].rolling(window=50).mean()
+
+# Calculate the moving average for the past 200 days
+tickerDf['MA200'] = tickerDf['Close'].rolling(window=200).mean()
+
+# Determine if the stock is a good buy based on the moving averages
+if tickerDf['MA50'][-1] > tickerDf['MA200'][-1]:
+    print(tickerSymbol + ' is a good buy.')
+else:
+    print(tickerSymbol + ' is not a good buy.')
+Note that this is just a simple example of how to retrieve stock data and analyze it using Python. It is important to remember that investing involves risk and it is always best to do your own research and seek professional financial advice before making any investment decisions.
