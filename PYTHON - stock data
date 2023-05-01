@@ -1,0 +1,24 @@
+import yfinance as yf
+import pandas as pd
+
+# Define the ticker symbol of the stock you want to retrieve data for
+tickerSymbol = 'AAPL'
+
+# Retrieve the data from Yahoo Finance
+tickerData = yf.Ticker(tickerSymbol)
+
+# Get the historical prices for the stock
+tickerDf = tickerData.history(period='1d', start='2010-1-1', end='2023-05-01')
+
+# Analyze the data using pandas
+# Calculate the moving average for the past 50 days
+tickerDf['MA50'] = tickerDf['Close'].rolling(window=50).mean()
+
+# Calculate the moving average for the past 200 days
+tickerDf['MA200'] = tickerDf['Close'].rolling(window=200).mean()
+
+# Determine if the stock is a good buy based on the moving averages
+if tickerDf['MA50'][-1] > tickerDf['MA200'][-1]:
+    print(tickerSymbol + ' is a good buy.')
+else:
+    print(tickerSymbol + ' is not a good buy.')
